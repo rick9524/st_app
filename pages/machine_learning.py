@@ -4,7 +4,7 @@ import pandas as pd
 
 # 定数の定義部分
 
-MODEL_PATH = ".assets/model.pkl"
+MODEL_PATH = "./assets/model.pkl"
 
 ## 説明変数の日英変換辞書
 JA2EN = {
@@ -39,7 +39,7 @@ def load_model():
     return model
 
 ## 折りたたみ部分を折りたたむ関数
-def disable_expanded():
+def disable_expander():
     st.session_state.expanded = False
 
 # 表示部分
@@ -54,7 +54,7 @@ load_state.markdown("")
 
 ## 折りたたみ式の入力フォーム
 st.markdown("## 以下の情報を入力してください")
-expander = st.expander('情報入力',exoanded=st.session_state.expanded)
+expander = st.expander('情報入力',expanded=st.session_state.expanded)
 with expander:
 
 # 説明変数の入力
@@ -68,8 +68,8 @@ with expander:
     region = st.radio("居住地域",["北西部","南西部","北東部","南東部"])
     
     # 入力された説明変数のDataFrame化
-    record_org = pd.DataFrame([[age,sex,height,weight,bmi,children,smoker,region]],
-                              colmuns=model.feature_names_in_)
+    record_org = pd.DataFrame([[age,sex,bmi,children,smoker,region]],
+                              columns=model.feature_names_in_)
     record_rep = record_org.replace(JA2EN)
     done =st.button("入力完了",on_click=disable_expander)
 
